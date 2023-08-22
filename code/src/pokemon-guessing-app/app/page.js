@@ -65,6 +65,7 @@ export default function Home() {
   // Will Select a Random Pokemon using Math.floor formula and set the selected Pokemon as the CurrentPokemon
   useEffect(() => {
     if (pokemon && !isError && !loading && pokemon.results) {
+      console.log(pokemon.results);
       const randomPokemon = Math.floor(Math.random() * pokemon.results.length);
       setCurrentPokemon(pokemon.results[randomPokemon]);
     }
@@ -98,6 +99,8 @@ export default function Home() {
       <h2 className="text-3x1 font-bold">Score: {score}</h2>
 
       <PokemonCard pokemon={currentPokemon} isCorect={isCorrect} />
+
+      <p> Type answer in lowercase :)</p>
 
       <form
         className="w-full max-w-sm"

@@ -11,8 +11,9 @@ export default function PokemonCard({ pokemon, isCorrect }) {
   // Run useEffect when Pokemon Changes from Props
   useEffect(() => {
     try {
-      console.log("Pokemon: ", pokemon);
       const fetchData = async () => {
+        // If no pokemon return nothing otherwise run the axios.get method
+        if (!pokemon) return;
         const result = await axios.get(pokemon?.url);
         setData(result.data);
       };
@@ -27,7 +28,7 @@ export default function PokemonCard({ pokemon, isCorrect }) {
     <div className="card">
       <img
         src={data?.sprites?.front_default}
-        alt={pokemon?.name}
+        alt={"Loading Image..."}
         className={isCorrect ? "card__img--correct" : "card__img--incorrect"}
         style={{
           marginTop: "50px",
