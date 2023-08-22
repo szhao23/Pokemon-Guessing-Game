@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   // useState for Pokemon
@@ -17,6 +18,27 @@ export default function Home() {
   const [guess, setGuess] = useState("");
   // useState for Correct or Incorrect to show the Shadow Version of Pokemon or Actual Version
   const [isCorrect, setIsCorrect] = useState(false);
+
+  // Call Backend Route to Fetch All Pokemon
+  const getPokemon = async () => {
+    setLoading(true);
+
+    try {
+      const data = await axios.get("/api/pokemon");
+      console.log("Data is: ", data);
+      setPokemon(data.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+      setLoading(false);
+    }
+  };
+
+  // Run getPokemon function when page loads
+  useEffect(() => {
+    getPokemon();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
