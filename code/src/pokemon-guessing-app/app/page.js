@@ -70,8 +70,30 @@ export default function Home() {
     }
   }, [pokemon]);
 
+  if (loading) {
+    const statusMessage = loading ? "Loading..." : "Error!";
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen py-2 h-screen">
+        <h1 className="text-6xl font-bold">{statusMessage}</h1>
+      </main>
+    );
+  }
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {/* Error Message comes up if something goes wrong for the user to see */}
+      {isError && (
+        <div
+          className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+          role="alert"
+        >
+          <strong className="font-bold">Error!</strong>
+          <span className="block sm:inline">
+            Something went wrong. Please try again later.
+          </span>
+        </div>
+      )}
+
       <h1 className="text-4x1 font-bold">Who's that Pokemon?!</h1>
       <h2 className="text-3x1 font-bold">Score: {score}</h2>
 
