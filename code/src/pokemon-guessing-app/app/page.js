@@ -100,8 +100,6 @@ export default function Home() {
 
       <PokemonCard pokemon={currentPokemon} isCorect={isCorrect} />
 
-      <p> Type answer in lowercase :)</p>
-
       <form
         className="w-full max-w-sm"
         onSubmit={handleSubmit}
