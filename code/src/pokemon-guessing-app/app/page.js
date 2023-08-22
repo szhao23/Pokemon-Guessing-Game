@@ -41,6 +41,26 @@ export default function Home() {
     getPokemon();
   }, []);
 
+  // HandleSubmit Function
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // If No Guess Return Nothing End Function
+    if (!guess) return;
+    if (guess.toLowerCase() === currentPokemon.name) {
+      setScore(score + 1);
+      setGuess("");
+      setIsCorrect(true);
+
+      setTimeout(() => {
+        setIsCorrect(false);
+        getPokemon();
+      }, 2000);
+    } else {
+      setGuess("");
+    }
+  };
+
   // When the Pokemon Array is Updated, this useEffect will run, checks if pokemon exists, is not error, and is not loading, if all is true
   // Will Select a Random Pokemon using Math.floor formula and set the selected Pokemon as the CurrentPokemon
   useEffect(() => {
@@ -56,6 +76,41 @@ export default function Home() {
       <h2 className="text-3x1 font-bold">Score: {score}</h2>
 
       <PokemonCard pokemon={currentPokemon} isCorect={isCorrect} />
+
+      <form
+        className="w-full max-w-sm"
+        onSubmit={handleSubmit}
+        style={{ marginTop: "2rem" }}
+      >
+        <div className="flex items-center border-b border-teal-500 py-2">
+          <input
+            className="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Which Pokemon is this?"
+            aria-label="Full name"
+            onChange={(e) => setGuess(e.target.value)}
+            value={guess}
+          />
+          <button
+            className="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            type="submit"
+          >
+            Submit
+          </button>
+          <button
+            className="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-1 px-2 rounded"
+            type="button"
+            onClick={() => {
+              // Set Guess to Empty String
+              setGuess("");
+              // Call another Pokemon
+              getPokemon();
+            }}
+          >
+            Skip
+          </button>
+        </div>
+      </form>
     </main>
   );
 }
